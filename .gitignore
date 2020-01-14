@@ -47,7 +47,6 @@ com_crashlytics_export_strings.xml
 /captures
 .externalNativeBuild
 
-porter_and_sail_android_keystore.jks
 
 # fastlane specific
 fastlane/report.xml
