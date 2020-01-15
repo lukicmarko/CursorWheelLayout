@@ -12,7 +12,6 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -20,6 +19,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+
+import androidx.annotation.ColorInt;
 
 
 /**
@@ -855,6 +856,7 @@ public class CursorWheelLayout extends ViewGroup {
             double angle;
             try {
                 angle = (double) mTempSelectedView.getTag(R.id.id_wheel_view_angle);
+//                angle = angle * 6;
             } catch (NullPointerException e) {
                 return;
             }

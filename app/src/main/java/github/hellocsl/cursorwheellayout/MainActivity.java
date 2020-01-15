@@ -1,17 +1,18 @@
 package github.hellocsl.cursorwheellayout;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import github.hellocsl.cursorwheel.CursorWheelLayout;
@@ -23,14 +24,14 @@ import github.hellocsl.cursorwheellayout.widget.SimpleTextCursorWheelLayout;
 
 public class MainActivity extends AppCompatActivity implements CursorWheelLayout.OnMenuSelectedListener {
 
-    @Bind(R.id.test_circle_menu_left)
+    @BindView(R.id.test_circle_menu_left)
     SimpleTextCursorWheelLayout mTestCircleMenuLeft;
-    @Bind(R.id.test_circle_menu_right)
+    @BindView(R.id.test_circle_menu_right)
     SimpleTextCursorWheelLayout mTestCircleMenuRight;
-    @Bind(R.id.main_button_random_selected)
+    @BindView(R.id.main_button_random_selected)
     Button mMainButtonRadonSelected;
     Random mRandom = new Random();
-    @Bind(R.id.test_circle_menu_top)
+    @BindView(R.id.test_circle_menu_top)
     CursorWheelLayout mTestCircleMenuTop;
 
     @Override
@@ -83,9 +84,10 @@ public class MainActivity extends AppCompatActivity implements CursorWheelLayout
 
     @OnClick(R.id.main_button_random_selected)
     void onRandomClick() {
-        int index = mRandom.nextInt(10);
-        mTestCircleMenuLeft.setSelection(index);
-        mTestCircleMenuRight.setSelection(index, false);
+        int index = mRandom.nextInt(5);
+//        mTestCircleMenuLeft.setSelection(index);
+//        mTestCircleMenuRight.setSelection(index, false);
+        mTestCircleMenuTop.setSelection(index, false);
         mMainButtonRadonSelected.setText("Random Selected:" + index);
     }
 }
