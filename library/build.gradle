@@ -27,9 +27,9 @@ dependencies {
 
 publish {
     userOrg = 'bcsl'
-    groupId = 'github.hellocsl'
-    artifactId = 'CursorWheelLayout'
+    groupId = 'com.applab'
+    artifactId = 'LuckyWheel'
     publishVersion = '1.1.0'
     desc = 'An Android Widget for selecting items that rotate on a wheel'
-    website = 'https://github.com/BCsl/CursorWheelLayout'
+    website = 'https://github.com/lukicmarko/CursorWheelLayout'
 }
