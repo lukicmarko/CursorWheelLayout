@@ -410,10 +410,10 @@ public class CursorWheelLayout extends ViewGroup {
         // size of menu item
         int cWidth = (int) (layoutDiameter * mMenuRadioDimension);
 
-        float angleDelay;
+        float angleDelay = 0;
         if (getCenterItem() != null) {
             angleDelay = 360 / (getChildCount() - 1);
-        } else {
+        } else if(getChildCount() != 0){
             angleDelay = 360 / (getChildCount());
         }
         //angle diff [0,360)
