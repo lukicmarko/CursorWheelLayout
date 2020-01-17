@@ -2,4 +2,5 @@
 <resources>
     <item name="id_wheel_menu_center_item" type="id"/>
     <item name="id_wheel_view_angle" type="id"/>
+    <item name="id_wheel_view_angle1" type="id" value="2"/>
 </resources>

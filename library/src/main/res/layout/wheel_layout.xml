@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:wheelCursorColor="@android:color/holo_green_dark"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <rs.applab.cursorwheel.CursorWheelLayout
+        android:id="@+id/view"
+        app:wheelCursorColor="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>
