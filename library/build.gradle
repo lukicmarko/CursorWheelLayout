@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 29
-    buildToolsVersion "28.0.3"
+    buildToolsVersion "29.0.2"
 
     defaultConfig {
         minSdkVersion 26
@@ -25,11 +25,11 @@ dependencies {
 }
 
 
-publish {
-    userOrg = 'bcsl'
-    groupId = 'com.applab'
-    artifactId = 'LuckyWheel'
-    publishVersion = '1.1.0'
-    desc = 'An Android Widget for selecting items that rotate on a wheel'
-    website = 'https://github.com/lukicmarko/CursorWheelLayout'
-}
+//publish {
+//    userOrg = 'bcsl'
+//    groupId = 'com.applab'
+//    artifactId = 'LuckyWheel'
+//    publishVersion = '1.1.0'
+//    desc = 'An Android Widget for selecting items that rotate on a wheel'
+//    website = 'https://github.com/lukicmarko/CursorWheelLayout'
+//}
