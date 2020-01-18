@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-             android:gravity="center">
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:background="@android:color/transparent"
+android:gravity="center">
 
 
-    <ImageView
-        android:id="@+id/wheel_menu_item_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:scaleType="centerInside"
-        tools:src="@drawable/ic_bank_bc"/>
+<ImageView
+    android:id="@+id/wheel_menu_item_iv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:scaleType="centerInside"
+    tools:src="@drawable/ic_bank_bc"/>
 
 </FrameLayout>

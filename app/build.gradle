@@ -28,7 +28,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.2.0-alpha01'
 
-    implementation project(':library')
+    implementation 'com.github.lukicmarko:WheelLayout:v1.1.5'//project(':library')
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
