@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -29,19 +30,17 @@ import androidx.annotation.ColorInt;
  * The base cycle wheel menu layout with cursor
  *
  * @author chensuilun
- * @attr  R.styleable.CursorWheelLayout_wheelSelectedAngle
- * @attr  R.styleable.CursorWheelLayout_wheelPaddingRadio
- * @attr  R.styleable.CursorWheelLayout_wheelCenterRadio
- * @attr  R.styleable.CursorWheelLayout_wheelItemRadio
- * @attr  R.styleable.CursorWheelLayout_wheelFlingValue
- * @attr  R.styleable.CursorWheelLayout_wheelCursorColor
- * @attr  R.styleable.CursorWheelLayout_wheelCursorHeight
- * @attr  R.styleable.CursorWheelLayout_wheelItemRotateMode
- * @attr  R.styleable.CursorWheelLayout_wheelGuideLineWidth
- * @attr  R.styleable.CursorWheelLayout_wheelGuideLineColor
+ * @attr R.styleable.CursorWheelLayout_wheelSelectedAngle
+ * @attr R.styleable.CursorWheelLayout_wheelPaddingRadio
+ * @attr R.styleable.CursorWheelLayout_wheelCenterRadio
+ * @attr R.styleable.CursorWheelLayout_wheelItemRadio
+ * @attr R.styleable.CursorWheelLayout_wheelFlingValue
+ * @attr R.styleable.CursorWheelLayout_wheelCursorColor
+ * @attr R.styleable.CursorWheelLayout_wheelCursorHeight
+ * @attr R.styleable.CursorWheelLayout_wheelItemRotateMode
+ * @attr R.styleable.CursorWheelLayout_wheelGuideLineWidth
+ * @attr R.styleable.CursorWheelLayout_wheelGuideLineColor
  */
-
-
 
 
 public class CursorWheelLayout extends ViewGroup {
@@ -154,6 +153,7 @@ public class CursorWheelLayout extends ViewGroup {
     private boolean mIsDraging;
 
     /**
+     *
      */
     private float mLastX;
     private float mLastY;
@@ -208,6 +208,8 @@ public class CursorWheelLayout extends ViewGroup {
     private int mGuideLineWidth;
 
     private int mGuideLineColor;
+
+    private boolean mShowGuideLine = false;
 
     /**
      * callback on menu item being click
@@ -286,7 +288,7 @@ public class CursorWheelLayout extends ViewGroup {
             mCenterRadioDimension = ta.getFloat(R.styleable.CursorWheelLayout_wheelCenterRadio, RADIO_DEFAULT_CENTER_DIMENSION);
             mPaddingRadio = ta.getFloat(R.styleable.CursorWheelLayout_wheelPaddingRadio, RADIO_PADDING_LAYOUT);
             mGuideLineWidth = ta.getDimensionPixelOffset(R.styleable.CursorWheelLayout_wheelGuideLineWidth, mGuideLineWidth);
-            mGuideLineColor = ta.getColor(R.styleable.CursorWheelLayout_wheelGuideLineColor, DEFAULT_GUIDE_LINE_COLOR);
+//            mGuideLineColor = ta.getColor(R.styleable.CursorWheelLayout_wheelGuideLineColor, DEFAULT_GUIDE_LINE_COLOR);
             mItemRotateMode = ta.getInt(R.styleable.CursorWheelLayout_wheelItemRotateMode, ITEM_ROTATE_MODE_NONE);
             ta.recycle();
         }
@@ -297,6 +299,7 @@ public class CursorWheelLayout extends ViewGroup {
         setWillNotDraw(false);
         mCursorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCursorPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mCursorPaint.setStrokeWidth(5);
         mCursorPaint.setColor(mCursorColor);
         mCursorPaint.setDither(true);
 
@@ -312,6 +315,25 @@ public class CursorWheelLayout extends ViewGroup {
         mGuidePaint.setStyle(Paint.Style.STROKE);
 
         mTrianglePath = new Path();
+    }
+
+    public void setWheelBackground(@ColorInt int backgroundColor) {
+        mWheelBgColor = backgroundColor;
+        mWheelPaint.setColor(mWheelBgColor);
+    }
+
+    public void showGuideLine(boolean showGuideLine) {
+        mShowGuideLine = showGuideLine;
+    }
+
+    public void setGuideLineColor(@ColorInt int guideColor) {
+        mGuideLineColor = guideColor;
+        mGuidePaint.setColor(mGuideLineColor);
+    }
+
+    public void setGuideLineWidth(int guideLineWidth) {
+        mGuideLineWidth = guideLineWidth;
+        mGuidePaint.setStrokeWidth(mGuideLineWidth);
     }
 
     @Override
@@ -410,7 +432,7 @@ public class CursorWheelLayout extends ViewGroup {
         // size of menu item
         int cWidth = (int) (layoutDiameter * mMenuRadioDimension);
 
-        float angleDelay ;
+        float angleDelay;
         if (getCenterItem() != null) {
             angleDelay = 360 / (getChildCount() - 1);
         } else {
@@ -456,7 +478,7 @@ public class CursorWheelLayout extends ViewGroup {
             left = layoutRadial
                     + (int) Math.round(tmp
                     * Math.cos(Math.toRadians(mStartAngle)) - 1 / 2f
-                    * (cWidth ));
+                    * (cWidth));
 
             //{tmp*sin(a)-1/2*height}即menu item相对中心点的纵坐标
             top = layoutRadial
@@ -538,7 +560,7 @@ public class CursorWheelLayout extends ViewGroup {
         canvas.rotate((float) (mSelectedAngle), 0, 0);
         canvas.drawPath(mTrianglePath, mCursorPaint);
         canvas.restore();
-        if (mIsDebug) {
+        if (mIsDebug || mShowGuideLine) {
             canvas.save();
             canvas.translate(mRootDiameter / 2f, mRootDiameter / 2f);
             canvas.drawCircle(0, 0, 10, mCursorPaint);
@@ -551,13 +573,17 @@ public class CursorWheelLayout extends ViewGroup {
                 angleDelay = 360 / (getChildCount());
                 startIndex = 0;
             }
-            for (int i = 0; i < 360; i += angleDelay) {
-                canvas.save();
-                canvas.rotate(i);
-                mCursorPaint.setTextAlign(Paint.Align.RIGHT);
-                mCursorPaint.setTextSize(28);
-                canvas.drawText(i + "°", mRootDiameter / 2.f, 0, mCursorPaint);
-                canvas.restore();
+
+            if (mIsDebug) {
+
+                for (int i = 0; i < 360; i += angleDelay) {
+                    canvas.save();
+                    canvas.rotate(i);
+                    mCursorPaint.setTextAlign(Paint.Align.RIGHT);
+                    mCursorPaint.setTextSize(28);
+                    canvas.drawText(i + "°", mRootDiameter / 2.f, 0, mCursorPaint);
+                    canvas.restore();
+                }
             }
             canvas.restore();
             canvas.save();
@@ -584,24 +610,26 @@ public class CursorWheelLayout extends ViewGroup {
             angleDelay = 360 / (getChildCount());
             startIndex = 0;
         }
-        if (mGuideLineWidth > 0 && getChildCount() - startIndex == mMenuItemCount) {
-            canvas.save();
-            canvas.translate(mRootDiameter / 2f, mRootDiameter / 2f);
-            View child = getChildAt(startIndex);
-            if (child != null && child.getTag(R.id.id_wheel_view_angle) != null) {
-                int startAngel = (int) (((Double) child.getTag(R.id.id_wheel_view_angle) + angleDelay / 2.f) % 360);
-                for (int i = startIndex; i < getChildCount(); i++) {
-                    canvas.save();
-                    canvas.rotate(startAngel);
-                    mGuidePath.reset();
-                    mGuidePath.moveTo(0, 0);
-                    mGuidePath.lineTo(mRootDiameter / 2.f, 0);
-                    canvas.drawPath(mGuidePath, mGuidePaint);
-                    startAngel += angleDelay;
-                    canvas.restore();
+        if (mShowGuideLine) {
+            if (mGuideLineWidth > 0 && getChildCount() - startIndex == mMenuItemCount) {
+                canvas.save();
+                canvas.translate(mRootDiameter / 2f, mRootDiameter / 2f);
+                View child = getChildAt(startIndex);
+                if (child != null && child.getTag(R.id.id_wheel_view_angle) != null) {
+                    int startAngel = (int) (((Double) child.getTag(R.id.id_wheel_view_angle) + angleDelay / 2.f) % 360);
+                    for (int i = startIndex; i < getChildCount(); i++) {
+                        canvas.save();
+                        canvas.rotate(startAngel);
+                        mGuidePath.reset();
+                        mGuidePath.moveTo(0, 0);
+                        mGuidePath.lineTo(mRootDiameter / 2.f, 0);
+                        canvas.drawPath(mGuidePath, mGuidePaint);
+                        startAngel += angleDelay;
+                        canvas.restore();
+                    }
                 }
+                canvas.restore();
             }
-            canvas.restore();
         }
     }
 
@@ -652,6 +680,7 @@ public class CursorWheelLayout extends ViewGroup {
      * add menu item to this layout
      */
     RelativeLayout itemsView;
+
     private void addMenuItems() {
         if (mWheelAdapter == null || mWheelAdapter.getCount() == 0) {
             throw new IllegalArgumentException("Empty menu source!");

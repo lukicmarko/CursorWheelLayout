@@ -1,12 +1,14 @@
 package rs.applab.luckywheel;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
         return super.onCreateView(name, context, attrs);
-
     }
 
     @Override
@@ -55,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-
+        mTestCircleMain.showSeparator(true);
+        mTestCircleMain.setSeparator(Color.WHITE, 2);
+        mTestCircleMain.wheelBackgroundColor(Color.GREEN);
         wheelData = new ArrayList<ImageData>();
         wheelData.add(new ImageData(R.drawable.ic_bank_bc, "0"));
         wheelData.add(new ImageData(R.drawable.ic_bank_china, "1"));
@@ -63,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
         wheelData.add(new ImageData(R.drawable.ic_bank_guangfa, "3"));
         wheelData.add(new ImageData(R.drawable.ic_bank_jianshe, "4"));
         wheelData.add(new ImageData(R.drawable.ic_bank_jiaotong, "5"));
+        wheelData.add(new ImageData(R.drawable.ic_bank_china, "1"));
+        wheelData.add(new ImageData(R.drawable.ic_bank_guangda, "2"));
+        wheelData.add(new ImageData(R.drawable.ic_bank_guangfa, "3"));
+        wheelData.add(new ImageData(R.drawable.ic_bank_jianshe, "4"));
+        wheelData.add(new ImageData(R.drawable.ic_bank_jiaotong, "5"));
+
 
         SimpleImageAdapter simpleImageAdapter = new SimpleImageAdapter(this, wheelData);
         mTestCircleMain.setAdapter(simpleImageAdapter);

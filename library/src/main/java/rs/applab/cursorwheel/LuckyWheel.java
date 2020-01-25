@@ -11,6 +11,8 @@ import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 
+import androidx.annotation.ColorInt;
+
 public class LuckyWheel extends FrameLayout {
 
     CursorWheelLayout cursorWheelLayout;
@@ -111,10 +113,22 @@ public class LuckyWheel extends FrameLayout {
         setSelection(position, DEFAULT_ROTATIONS_COUNT, DEFAULT_ROTATION_DURATION_MS, DEFAULT_ANIMATION_INTERPOLATOR);
     }
 
+    public void setSeparator(@ColorInt int color, int width) {
+        cursorWheelLayout.setGuideLineColor(color);
+        cursorWheelLayout.setGuideLineWidth(width);
+    }
+
+    public void showSeparator(boolean show) {
+        cursorWheelLayout.showGuideLine(show);
+    }
+
+    public void wheelBackgroundColor(@ColorInt int color) {
+        cursorWheelLayout.setWheelBackground(color);
+    }
+
     public void setAdapter(CursorWheelLayout.CycleWheelAdapter adapter) {
         cursorWheelLayout.setAdapter(adapter);
     }
-
 
     public void setOnSelectionListener(OnSelectionListener onSelectionListener) {
         mOnSelectionListener = onSelectionListener;
